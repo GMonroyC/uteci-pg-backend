@@ -20,19 +20,26 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Ruta de estado general
-app.get('/control-escolar-backend', (req, res) => {
+// Ruta de estado general (raíz o /api/status)
+app.get('/', (req, res) => {
   res.json({ 
     status: 'OK', 
     message: 'API de UTECI CE Pro funcionando correctamente con PostgreSQL (Aiven)' 
   });
 });
 
-// Registrar las rutas del sistema escolar con su prefijo
-app.use('/control-escolar-backend/alumnos', alumnosRoutes);
-app.use('/control-escolar-backend/materias', materiasRoutes);
-app.use('/control-escolar-backend/profesores', profesoresRoutes);
-app.use('/control-escolar-backend/tareas', tareasRoutes);
+app.get('/api', (req, res) => {
+  res.json({ 
+    status: 'OK', 
+    message: 'API de UTECI CE Pro funcionando correctamente con PostgreSQL (Aiven)' 
+  });
+});
+
+// Registrar las rutas del sistema escolar con un prefijo limpio /api
+app.use('/api/alumnos', alumnosRoutes);
+app.use('/api/materias', materiasRoutes);
+app.use('/api/profesores', profesoresRoutes);
+app.use('/api/tareas', tareasRoutes);
 
 // Puerto del servidor
 const PORT = process.env.PORT || 3000;
